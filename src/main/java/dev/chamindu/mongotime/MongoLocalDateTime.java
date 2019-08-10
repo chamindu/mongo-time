@@ -27,7 +27,6 @@ public class MongoLocalDateTime implements Comparable<MongoLocalDateTime> {
         return this.localDateTime.getMonth();
     }
 
-
     public int getDayOfMonth() {
         return this.localDateTime.getDayOfMonth();
     }
@@ -52,9 +51,12 @@ public class MongoLocalDateTime implements Comparable<MongoLocalDateTime> {
         return new MongoLocalDateTime(this.localDateTime.plusDays(days));
     }
 
-
     @Override
     public int compareTo(MongoLocalDateTime other) {
         return this.localDateTime.compareTo(other.localDateTime);
+    }
+
+    public String toString() {
+        return  this.localDateTime.toString();
     }
 }

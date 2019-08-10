@@ -5,6 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @SpringBootApplication
 public class MongotimeApplication implements CommandLineRunner {
@@ -24,24 +25,22 @@ public class MongotimeApplication implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         createEvent();
-        createLocalTimeEvent();
-
+        createLocalTimeEvents();
+        queryByDateRange();
     }
 
     private void createEvent() {
-        System.out.println("Deleting old event records.");
+        System.out.println("Deleting old Event documents and creating a new document");
         this.eventRepository.deleteAll();
 
         LocalDateTime dateTime = LocalDateTime.of(2019, 8, 1, 9, 30);
         Event event = new Event();
         event.setEventTime(dateTime);
-
         this.eventRepository.save(event);
-
     }
 
-    private void createLocalTimeEvent() {
-        System.out.println("Deleting old event records.");
+    private void createLocalTimeEvents() {
+        System.out.println("Deleting old LocalTimeEvent documents and creating 10 new documents.");
         this.localTimeEventRepository.deleteAll();
 
         for (int day = 1; day < 11; day++) {
@@ -50,7 +49,18 @@ public class MongotimeApplication implements CommandLineRunner {
             event.setEventTime(dateTime);
             this.localTimeEventRepository.save(event);
         }
-
     }
 
+    private void queryByDateRange() {
+        System.out.println("Querying records in date range 2019-08-05 to 2019-08-08.");
+
+        MongoLocalDateTime start = MongoLocalDateTime.of(2019, 8, 5, 0, 0, 0);
+        MongoLocalDateTime end = MongoLocalDateTime.of(2019, 8, 8, 0, 0, 0);
+
+        List<LocalTimeEvent> result = this.localTimeEventRepository.findByEventTimeRange(start, end);
+
+        for(LocalTimeEvent event: result) {
+            System.out.println(event.getEventTime());
+        }
+    }
 }
