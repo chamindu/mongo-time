@@ -1,6 +1,6 @@
 # Persisting `LocalDateTime` Values in Mongodb With Spring
 
-This repository is the sample app used in my article about persisting `LocalDateTime` fields in entities as String
+This repository is the sample app used in my [article](https://www.chamindu.dev/posts/localdatetime-spring-mongodb/) about persisting `LocalDateTime` fields in entities as String
 in MongoDB. 
 
 ## Running the code
